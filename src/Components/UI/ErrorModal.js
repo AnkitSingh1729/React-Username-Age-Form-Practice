@@ -2,7 +2,9 @@ import React from "react";
 import Button from "./Button";
 import Card from "./Card";
 import classes from "./ErrorModal.module.css";
-import { ReactDOM } from "react";
+import ReactDOM from "react-dom";   // important, react-dom is dependency, 
+                                    // we also have react as a dependency but here we 
+                                    // looking for react-dom
 
 const ErrorModal = (props) => {
   const Backdrop = (props) => {

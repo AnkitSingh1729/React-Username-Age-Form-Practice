@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Card from "../UI/Card";
 import classes from "./AddUser.module.css";
 import Button from "../UI/Button";
@@ -6,17 +6,25 @@ import ErrorModal from "../UI/ErrorModal";
 import Wrapper from "../Helpers/Wrapper";
 
 const AddUser = (props) => {
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
+
+
   const [enteredUserName, setEnteredUsername] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
   const [error, setError] = useState();
   const addUserHandler = (event) => {
     event.preventDefault();
-
+    console.log(nameInputRef, ageInputRef);
+    console.log(nameInputRef.current.value, ageInputRef.current.value);
+    // We can consider doing dom manipulation in this case (However it's recommended to avoid it and let react handle it)
+    nameInputRef.current.value = '';   // Setting the input value in webpage back to empty
+    ageInputRef.current.value = '';
     if (enteredAge.trim().length === 0 || enteredUserName.trim().length === 0) {
       setError({
         title: "Invalid input",
         message: "Please enter a valid name and age (non-empty values).",
-      });
+      });   
       return;
     }
     if (+enteredAge < 1) {
@@ -60,13 +68,15 @@ const AddUser = (props) => {
             onChange={usernameChangeHandler}
             value={enteredUserName}
             type="text"
+            ref={nameInputRef}
           />
           <label htmlFor="age">Age (Years)</label>
           <input
             id="age"
             onChange={ageChangeHandler}
             value={enteredAge}
-            type="number"
+            type="number" 
+            ref={ageInputRef}
           />
           <Button type="submit">Add User</Button>
         </form>
